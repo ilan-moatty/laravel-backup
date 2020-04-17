@@ -45,6 +45,7 @@ class DbDumperFactory
 
         if ($dbDumper instanceof MongoDb) {
             $dbDumper->setAuthenticationDatabase($dbConfig['dump']['mongodb_user_auth'] ?? '');
+            $dbDumper->shardList = env('DB_SHARD_LIST');
         }
 
         if (isset($dbConfig['port'])) {
@@ -93,7 +94,7 @@ class DbDumperFactory
     protected static function processExtraDumpParameters(array $dumpConfiguration, DbDumper $dbDumper): DbDumper
     {
         collect($dumpConfiguration)->each(function ($configValue, $configName) use ($dbDumper) {
-            $methodName = lcfirst(Str::studly(is_numeric($configName) ? $configValue : $configName));
+            $methodName  = lcfirst(Str::studly(is_numeric($configName) ? $configValue : $configName));
             $methodValue = is_numeric($configName) ? null : $configValue;
 
             $methodName = static::determineValidMethodName($dbDumper, $methodName);
@@ -108,7 +109,7 @@ class DbDumperFactory
 
     protected static function callMethodOnDumper(DbDumper $dbDumper, string $methodName, $methodValue): DbDumper
     {
-        if (! $methodValue) {
+        if (!$methodValue) {
             $dbDumper->$methodName();
 
             return $dbDumper;
@@ -121,7 +122,7 @@ class DbDumperFactory
 
     protected static function determineValidMethodName(DbDumper $dbDumper, string $methodName): string
     {
-        return collect([$methodName, 'set'.ucfirst($methodName)])
+        return collect([$methodName, 'set' . ucfirst($methodName)])
             ->first(function (string $methodName) use ($dbDumper) {
                 return method_exists($dbDumper, $methodName);
             }, '');

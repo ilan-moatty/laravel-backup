@@ -1,5 +1,5 @@
 {
-    "name": "spatie/laravel-backup",
+    "name": "jobilla/laravel-backup",
     "description": "A Laravel package to backup your application",
     "keywords": [
         "spatie",
@@ -26,7 +26,7 @@
         "illuminate/notifications": "^5.8.15|^6.0|^7.0",
         "illuminate/support": "^5.8.15|^6.0|^7.0",
         "league/flysystem": "^1.0.49",
-        "spatie/db-dumper": "^2.12",
+        "jobilla/db-dumper": "dev-master",
         "spatie/temporary-directory": "^1.1",
         "symfony/finder": "^4.2|^5.0"
     },
@@ -36,7 +36,6 @@
         "mockery/mockery": "^1.3",
         "orchestra/testbench": "3.8.*|4.*|5.*",
         "phpunit/phpunit": "^8.4|^9.0"
-
     },
     "autoload": {
         "psr-4": {
@@ -68,5 +67,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:jobilla/db-dumper.git"
+        }
+    ]
 }
