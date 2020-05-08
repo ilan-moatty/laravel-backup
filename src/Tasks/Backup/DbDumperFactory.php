@@ -45,7 +45,7 @@ class DbDumperFactory
 
         if ($dbDumper instanceof MongoDb) {
             $dbDumper->setAuthenticationDatabase($dbConfig['dump']['mongodb_user_auth'] ?? '');
-            $dbDumper->shardList = env('DB_SHARD_LIST');
+            $dbDumper->shardList = env('DB_DSN');
         }
 
         if (isset($dbConfig['port'])) {
